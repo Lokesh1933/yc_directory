@@ -12,7 +12,7 @@ import { client } from "@/sanity/lib/client";
 import { STARTUP_QUERY_BY_ID, PLAYLIST_BY_SLUG_QUERY } from "@/sanity/lib/queries";
 import { formatDate } from "@/lib/utils";
 
-export const experimental_ppr = true;
+
 
 const md = markdownit();
 
@@ -20,10 +20,12 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
 
   // Fetch startup by id and editor picks playlist
-  const [post, { select: editorPosts }] = await Promise.all([
+  const [post, playlistData] = await Promise.all([
     client.fetch(STARTUP_QUERY_BY_ID, { id }),
     client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: "editor-picks"}),
   ]);
+
+  const editorPosts = playlistData?.select || [];
 
   if (!post) {
     return notFound();
@@ -43,7 +45,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         <img
           src={post?.image}
           alt="thumbnail"
-          className="w-full h-auto rounded-xl"
+          className="w-full max-w-6xl mx-auto h-[600px] rounded-xl object-cove"
         />
 
         <div className="space-y-5 mt-10 max-w-4xl mx-auto">
@@ -84,7 +86,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         <hr className="divider" />
 
-        {editorPosts.length > 0 && (
+        {editorPosts?.length > 0 && (
           <div className="max-w-4xl mx-auto">
             <p className="text-30-semibold">Editor Picks</p>
 
