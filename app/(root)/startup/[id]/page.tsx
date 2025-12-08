@@ -12,7 +12,7 @@ import { client } from "@/sanity/lib/client";
 import { STARTUP_QUERY_BY_ID, PLAYLIST_BY_SLUG_QUERY } from "@/sanity/lib/queries";
 import { formatDate } from "@/lib/utils";
 
-
+// export const experimental_ppr = true;
 
 const md = markdownit();
 

@@ -1,4 +1,4 @@
-export const experimental_ppr = true;
+// export const experimental_ppr = true;
 
 import { notFound } from "next/navigation";
 import Image from "next/image";
